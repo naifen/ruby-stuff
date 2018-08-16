@@ -74,6 +74,16 @@ ff = ->(n, i = 0, j = 1){ (1..n).map{ i = j + j = i } }
 # III: i = j + j = i => i = 5, j = 3
 # ...
 
+# tail recurssion version, less stack, save memory, handle bigger number
+def fib(n, a = 0, b = 1)
+  return a if n == 0
+  return b if n == 1
+
+  fib(n - 1, b, a + b)
+end
+
+
+
 
 
 # naive fib implementations print while fib <= N
