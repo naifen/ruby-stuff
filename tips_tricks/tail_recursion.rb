@@ -1,5 +1,16 @@
 require 'benchmark'
 
+# NOTE: b/c tailcall_optimization is set to false by default in RubyVM,
+# require "pp"
+# pp RubyVM::InstructionSequence.compile_option
+#
+# to use tail recursion in this file, open a REPL and do the followings:
+# require "./tail_recur_config.rb"
+# => true
+# > require "./tail_recursion.rb"
+# => true
+# and call tail recursion methods
+#
 ################################################################################
 # FACTORIAL
 ################################################################################
