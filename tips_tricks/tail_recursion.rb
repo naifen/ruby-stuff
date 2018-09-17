@@ -30,11 +30,16 @@ def tail_factorial(n, prod = 1)
   tail_factorial(n - 1, n * prod)
 end
 
-N = 10000
+N = 10_000
 
-Benchmark.bm do |b|
-  b.report { factorial N }
-  b.report { tail_factorial N }
+# factorial N * 10 # => SystemStackError: stack level too deep
+# tail_factorial N * 10 # => works
+
+def bench_factorial
+  Benchmark.bm do |b|
+    b.report { factorial N }
+    b.report { tail_factorial N }
+  end
 end
 
 ################################################################################
@@ -57,7 +62,9 @@ def tail_sum(n, total = 0)
   tail_sum(n - 1, total + n)
 end
 
-Benchmark.bm do |b|
-  b.report { sum N }
-  b.report { tail_sum N }
+def bench_sum
+  Benchmark.bm do |b|
+    b.report { sum N }
+    b.report { tail_sum N }
+  end
 end

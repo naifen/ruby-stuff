@@ -46,7 +46,7 @@ puts calculation(5, 6) { |a, b| a + b } # => 11
 
 # NOTE: however yield can take arguments, it's not a function
 # Ruby's Object Oriented rule dosen't apply to yield
-puts method(:yield) # => message: undefined method `yield' for class `Object'
+# puts method(:yield) # => message: undefined method `yield' for class `Object'
 
 # using yield is slightly fast then Proc#call
 require "benchmark"
@@ -59,7 +59,7 @@ def calculation_with_implicit_block_passing(a, b)
  yield(a, b)
 end
 
-Benchmark.bmbm(10) do |report|
+Benchmark.bm(10) do |report|
  report.report("explicit") do
    addition = lambda { |a, b| a + b }
    100000.times { calculation_with_explicit_block_passing(5, 5, addition) }
@@ -70,7 +70,7 @@ Benchmark.bmbm(10) do |report|
  end
 end
 
-# STDOUT:
+# Sample STDOUT:
 # Rehearsal ---------------------------------------------
 # explicit    0.020000   0.000000   0.020000 (  0.018351)
 # implicit    0.010000   0.000000   0.010000 (  0.011923)
@@ -94,5 +94,5 @@ class Person
 end
 
 p =  Person.new 'John Doe'
-p.do_with_name { |n| n.reverse! }
-p.name # => "eoD nhoJ"
+p.do_with_name { |name| name.reverse! }
+puts p.name # => "eoD nhoJ"
