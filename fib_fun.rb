@@ -1,14 +1,15 @@
+require 'benchmark'
+
 # one liner fib but slow due to repeated calculation
-def fib_slow(n)
-  n <= 1 ? n : fib_slow(n - 1) + fib_slow(n - 2)
+def slow_fib(n)
+  n <= 1 ? n : slow_fib(n - 1) + slow_fib(n - 2)
 end
 
 # memoization repeated calculation
-def fib(n, memo = {})
+def memo_fib(n, memo = {})
   return n if n <= 1
-  memo[n] ||= fib(n - 1, memo) + fib(n - 2, memo)
+  memo[n] ||= memo_fib(n - 1, memo) + memo_fib(n - 2, memo)
 end
-# NOTE(one-liner): n <= 1 ? n : memo[n] ||= fib(n - 1, memo) + fib(n - 2, memo)
 ################################################################################
 # Digram of Ruby fibonacci w/ memoization, eliminates repeated calculation     #
 ################################################################################
@@ -44,24 +45,28 @@ end
 # {2=>1, 3=>2, 4=>3, 5=>5, 6=>8, 7=>13, 8=>21}
 # {2=>1, 3=>2, 4=>3, 5=>5, 6=>8, 7=>13, 8=>21, 9=>34}
 
-# Hash block initializer hack, see following ri doc example
+
+################################################################################
+# Fibonacci hacks:
+################################################################################
+# NO.1 Hash block initializer hack, see following ri doc example
 # While this creates a new default object each time
 # h = Hash.new { |hash, key| hash[key] = "Go Fish: #{key}" }
 # h["c"]           #=> "Go Fish: c"
 # h["c"].upcase!   #=> "GO FISH: C"
 # h["d"]           #=> "Go Fish: d"
 # h.keys           #=> ["c", "d"]
+#
 # NOTE: Because of the nature of hash, memoization is enabled by default
 # So this is so damn fast, call hash_fib[1000] is like instant
-hash_fib = Hash.new{ |fib, n| fib[n] = n < 2 ? n : fib[n - 1] + fib[n - 2] }
-# no colon version, use merge! mimic "n < 2 ? n" part
-# Hash.new { |fib, n| fib[n] = fib[n - 1] + fib[n - 2] }.merge!(0 => 0, 1 => 1)
+hash_fib_tn = Hash.new{ |fib, n| fib[n] = n < 2 ? n : fib[n - 1] + fib[n - 2] }
+# merge! version, replace ternary "n < 2 ? n" part with default values
+hash_fib_mg = Hash.new { |fib, n| fib[n] = fib[n - 1] + fib[n - 2] }.merge!(0 => 0, 1 => 1)
 
-# more fibonacci hacks
-# Lambda fib, envoke with f[n], kinda slow even f[50] takes forever
+# NO.2 Lambda fib, envoke with f[n], kinda slow even f[50] takes forever
 f = ->(x){ x < 2 ? x : f[x-1] + f[x-2] }
 
-# This is super hack and print one fib number per line w/ "puts ff[n]"
+# NO.3 This is super hacky and prints one fib number per line w/ "puts ff[n]"
 ff = ->(n, i = 0, j = 1){ (1..n).map{ i = j + j = i } }
 # Explain:
 # starting point i = 0, j = 1
@@ -74,20 +79,27 @@ ff = ->(n, i = 0, j = 1){ (1..n).map{ i = j + j = i } }
 # III: i = j + j = i => i = 5, j = 3
 # ...
 
-# tail recurssion version, less stack, save memory, handle bigger number
-def fib(n, a = 0, b = 1)
+# NO.4 Tail recurssion version, less stack, save memory, handle bigger number
+def tail_fib(n, a = 0, b = 1)
   return a if n == 0
   return b if n == 1
 
-  fib(n - 1, b, a + b)
+  tail_fib(n - 1, b, a + b)
 end
 
+################################################################################
+# Benchmarks
+################################################################################
+N = 30
 
+Benchmark.bm do |b|
+  b.report { slow_fib N } # slow
+  b.report { memo_fib N } # fast
+  b.report { tail_fib N } # faster
+end
 
-
-
-# naive fib implementations print while fib <= N
-def fiblt(n)
+# naive and costly fib implementations
+def fib_naive(n)
   return 'cannot be negative' if n < 0
   return 1 if n <= 2
   a, b = 0, 1
@@ -98,9 +110,8 @@ def fiblt(n)
   end
 end
 
-def recr_fiblt(a = 0, b = 1, n)
+def recr_fib(a = 0, b = 1, n)
   return if n <= 0 || a > n
 
-  puts a
-  fibltrc(b, a + b, n)
+  recr_fib(b, a + b, n)
 end

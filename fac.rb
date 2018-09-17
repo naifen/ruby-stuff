@@ -1,18 +1,19 @@
 require 'benchmark'
 
-def factorial(n, memo = {})
+def memo_factorial(n, memo = {})
   return n if n <= 1
-  memo[n] = n * factorial(n - 1, memo)
+  memo[n] ||= n * memo_factorial(n - 1, memo)
 end
 
-def factorial2(n)
+def factorial(n)
   return 1 if n <= 1
   n * factorial(n - 1)
 end
 
-n = 5000
+N = 8000
 
 Benchmark.bm do |b|
-  b.report { factorial n }
-  b.report { factorial2 n }
+  b.report { memo_factorial N }
+  b.report { factorial N }
+  # result is kinda similar
 end
