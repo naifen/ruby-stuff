@@ -16,6 +16,7 @@ class GesturePasscode
   }
 
   KEYS_ARRAY=[
+    [],
     [[1,2],[1,4],[1,5]],
     [[2,1],[2,3],[2,4],[2,5],[2,6]],
     [[3,2],[3,5],[3,6]],
@@ -27,21 +28,31 @@ class GesturePasscode
     [[9,6],[9,5],[9,8]]
   ]
 
+  # NOTE: represent diagonally reachable key by index => value
+  # key 1's diagonally reachable key is DIAGONAL_PAIRS[1] => 9
+  DIAGONAL_PAIRS = [0, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+
+  CENTER_KEY = 5
+
   def initialize(start_key, pass_length)
     @start_key = start_key
     @pass_length = pass_length
   end
 
-  # TODO: SHOULD allow cross selected key, eg 2 -> 5 -> 8 -> 6 -> 4
-  # TODO: does NOT work for length > 6
-  def get_passcode_from_hsh
+  # TODO: slow or DOES NOT work for length >= 6
+
+  def get_passcode_from_hsh # solution 1
     result = [@start_key]
 
     while result.length < @pass_length
-      key = KEYS_HASH[result[-1]].sample
+      reachable_keys = KEYS_HASH[result[-1]]
 
-      redo if result.include?(key)
+      if result.include?(CENTER_KEY) && result[-1] != CENTER_KEY
+        reachable_keys << DIAGONAL_PAIRS[result[-1]] unless result.include?(DIAGONAL_PAIRS[result[-1]])
+      end
 
+      key = reachable_keys.sample
+      redo if result.include?(key) || key == 0
       result << key
     end
 
@@ -49,14 +60,18 @@ class GesturePasscode
   end
 
 
-  def get_passcode_from_ary
+  def get_passcode_from_ary # solution 2
     result = [@start_key]
 
     while result.length < @pass_length
-      key = KEYS_ARRAY[result[-1] - 1].sample[1]
+      reachable_keys = KEYS_ARRAY[result[-1]]
 
-      redo if result.include?(key)
+      if result.include?(CENTER_KEY) && result[-1] != CENTER_KEY
+        reachable_keys << DIAGONAL_PAIRS[result[-1]] unless result.include?(DIAGONAL_PAIRS[result[-1]])
+      end
 
+      key = reachable_keys.sample[1]
+      redo if result.include?(key) || key == 0
       result << key
     end
 
@@ -79,7 +94,12 @@ class GesturePasscode
     print_3x3keyboard key_pass_ary
   end
 
-  private def print_3x3keyboard(key_pass_array) # eg, [2, 5, 8, 9, 6, 3]
+  # a 3 x 3 keyboard example:
+  # [1, 2, 3]
+  # [4, 5, 6]
+  # [7, 8, 9]
+  # @param [Array{Integer}] an array of sequences eg, [2, 5, 8, 9, 6, 3]
+  private def print_3x3keyboard(key_pass_array)
     # group array into a hash: { 2 => [..], 1 => [..], 0 => [..] }
     # representing 3 colums on the 3x3 keyboard
     grouped_keys = key_pass_array.sort.group_by { |n| n % 3 }
