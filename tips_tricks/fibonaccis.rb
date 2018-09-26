@@ -8,7 +8,7 @@ end
 # memoization repeated calculation
 def memo_fib(n, memo = {})
   return n if n <= 1
-  memo[n] ||= memo_fib(n - 1, memo) + memo_fib(n - 2, memo)
+  memo[n] ||= memo_fib(n - 1, memo) + memo_fib(n - 2, memo) # two memo_fib call will repeat calculats w/o memo
 end
 ################################################################################
 # Digram of Ruby fibonacci w/ memoization, eliminates repeated calculation     #
@@ -80,6 +80,7 @@ ff = ->(n, i = 0, j = 1){ (1..n).map{ i = j + j = i } }
 # ...
 
 # NO.4 Tail recurssion version, less stack, save memory, handle bigger number
+# See tail_recursion.rb file for benchmark
 def tail_fib(n, a = 0, b = 1)
   return a if n == 0
   return b if n == 1
@@ -95,7 +96,6 @@ N = 30
 Benchmark.bm do |b|
   b.report { slow_fib N } # slow
   b.report { memo_fib N } # fast
-  b.report { tail_fib N } # faster
 end
 
 # naive and costly fib implementations

@@ -1,4 +1,4 @@
-require_relative '../tail_recursion'
+require_relative '../tips_tricks/tail_recursion'
 require 'test/unit'
 
 class TailRecursionTest < Test::Unit::TestCase
@@ -8,7 +8,13 @@ class TailRecursionTest < Test::Unit::TestCase
     assert_equal 720, factorial(6), "factorial of 6 should be 720"
   end
 
-  def test_factorial
+  def test_memo_factorial
+    assert_equal 6, memo_factorial(3), "tail factorial of 3 should be 6"
+    assert_equal 120, memo_factorial(5), "tail factorial of 5 should be 120"
+    assert_equal 720, memo_factorial(6), "tail factorial of 6 should be 720"
+  end
+
+  def test_tail_factorial
     assert_equal 6, tail_factorial(3), "tail factorial of 3 should be 6"
     assert_equal 120, tail_factorial(5), "tail factorial of 5 should be 120"
     assert_equal 720, tail_factorial(6), "tail factorial of 6 should be 720"

@@ -1,4 +1,6 @@
 require 'benchmark'
+N = 10_000
+NF = 30
 
 # NOTE: b/c tailcall_optimization is set to false by default in RubyVM,
 # require "pp"
@@ -41,15 +43,20 @@ def tail_factorial(n, prod = 1)
   tail_factorial(n - 1, n * prod)
 end
 
-N = 10_000
+def memo_factorial(n, memo = {})
+  return n if n <= 1
+  memo[n] ||= n * memo_factorial(n - 1, memo)
+end
+
 
 # factorial N * 10 # => SystemStackError: stack level too deep
 # tail_factorial N * 10 # => works
 
 def bench_factorial
   Benchmark.bm do |b|
-    b.report { factorial N }
-    b.report { tail_factorial N }
+    b.report { factorial N}
+    b.report { memo_factorial N / 10 }
+    b.report { tail_factorial N * 10 } # takes order of magnitude larger value
   end
 end
 
@@ -76,6 +83,28 @@ end
 def bench_sum
   Benchmark.bm do |b|
     b.report { sum N }
-    b.report { tail_sum N }
+    b.report { tail_sum N * 10 } # takes order of magnitude larger value
   end
 end
+
+################################################################################
+# Fibonacci
+################################################################################
+def slow_fib(n)
+  n <= 1 ? n : slow_fib(n - 1) + slow_fib(n - 2)
+end
+
+def tail_fib(n, a = 0, b = 1)
+  return a if n == 0
+  return b if n == 1
+
+  tail_fib(n - 1, b, a + b)
+end
+
+def bench_fib
+  Benchmark.bm do |b|
+    b.report { slow_fib NF }
+    b.report { tail_fib NF * 100 } # orders of magnitude faster, takes bigger number
+  end
+end
+

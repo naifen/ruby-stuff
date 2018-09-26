@@ -88,11 +88,11 @@ class Person
     @name = name
   end
 
-  def do_with_name
+  def manipulate_name
     yield(@name)
   end
 end
 
 p =  Person.new 'John Doe'
-p.do_with_name { |name| name.reverse! }
+p.manipulate_name { |name| name.reverse! }
 puts p.name # => "eoD nhoJ"
