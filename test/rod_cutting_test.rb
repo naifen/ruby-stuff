@@ -33,10 +33,10 @@ class RodCuttingTest < Test::Unit::TestCase
   ROD2_CUT = [2, 6]
 
   def test_cut_rod_dp
-    assert_equal ROD1_MAX_VAL, cut_rod_dp(ROD1).values.last[:val], "Expect rod1 max val to equal #{ROD1_MAX_VAL}"
+    assert_equal ROD1_MAX_VAL, cut_rod_dp(ROD1).values.last[:max_val], "Expect rod1 max val to equal #{ROD1_MAX_VAL}"
     assert_equal ROD1_CUT, cut_rod_dp(ROD1).values.last[:cut], "Expect rod1 cut to equal #{ROD1_CUT}"
 
-    assert_equal ROD2_MAX_VAL, cut_rod_dp(ROD2).values.last[:val], "Expect rod1 max val to equal #{ROD2_MAX_VAL}"
+    assert_equal ROD2_MAX_VAL, cut_rod_dp(ROD2).values.last[:max_val], "Expect rod1 max val to equal #{ROD2_MAX_VAL}"
     assert_equal ROD2_CUT, cut_rod_dp(ROD2).values.last[:cut], "Expect rod1 cut to equal #{ROD2_CUT}"
   end
 end
