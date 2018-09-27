@@ -53,10 +53,3 @@ def longest_common_substring(str1, str2)
   result
 end
 
-str1 = "OldSite:GeeksforGeeks.org"
-str2 = "NewSite:GeeksQuiz.com"
-
-result = longest_common_substring str1, str2
-lcs = str1.slice((result[:last_index] - result[:length]), result[:length])
-puts "the longest common substring is: " + lcs
-
