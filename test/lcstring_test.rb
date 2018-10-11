@@ -32,5 +32,3 @@ class LCStringTest < Test::Unit::TestCase
     assert_equal RESULT3, lcs, "Expect the result to be #{RESULT3}"
   end
 end
-
-

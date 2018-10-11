@@ -1,6 +1,7 @@
-# Dynamic programming solution:
+# Problem:
 # Given two strings: str1 and str2, find their longest common substring
-# eg, str1 = abcdef str2 = xbcd66f => bcd
+# Example: str1 = abcdef str2 = xbcd66f => bcd
+#
 # * construct a 2d array(str1.len * str2.len) store the length of common substring at array[i][j]
 #       a  b  c  d  e  f
 #     0 0  0  0  0  0  0

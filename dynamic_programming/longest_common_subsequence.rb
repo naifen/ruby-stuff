@@ -1,8 +1,10 @@
+# Problem:
 # Given two sequences, print the longest subsequence present in both of them.
+#
 # Examples:
 # LCS for input Sequences “ABCDGH” and “AEDFHR” is “ADH” of length 3.
 # LCS for input Sequences “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.
-# Difference between sebsequence and substring is: substring has to be adjacent sequence
+# sebsequence vs substring: substring has to be adjacent sequence
 def longest_common_subsequence(str1, str2)
   len1 = str1.length
   len2 = str2.length
@@ -54,12 +56,3 @@ def longest_common_subsequence(str1, str2)
 
   lcseq.join('')
 end
-
-x = "ABCDGHLQR"
-y = "AEDPHR"
-puts "LCS is: " + longest_common_subsequence(x, y)
-
-a = "AGGTAB"
-b = "GXTXAYB"
-puts "LCS is: " + longest_common_subsequence(a, b)
-
