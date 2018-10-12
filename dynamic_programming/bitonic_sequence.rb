@@ -2,7 +2,8 @@
 # Find the length of the longest Bitonic Sequence in a given sequence of numbers
 # a Bitonic sequence is a sequence of numbers which are increasing and then decreasing
 
-# @param seq [Integer] representing the given sequence
+# find the longest increasing subsequence and the longest decresaing subsequence
+# @param seq [Array<Integer>] a given sequence eg, [2, 8, 10 ... 5, 3]
 def longest_bitonic_sequence(seq)
   input_length = seq.length
   increasing_sequence = Array.new(input_length, 1)
@@ -33,3 +34,4 @@ def longest_bitonic_sequence(seq)
 
   max_value
 end
+# TODO add test

@@ -5,6 +5,8 @@
 # LCS for input Sequences “ABCDGH” and “AEDFHR” is “ADH” of length 3.
 # LCS for input Sequences “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.
 # sebsequence vs substring: substring has to be adjacent sequence
+
+# @param str1 [String] str2 [String] given strings
 def longest_common_subsequence(str1, str2)
   len1 = str1.length
   len2 = str2.length

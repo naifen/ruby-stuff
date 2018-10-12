@@ -28,6 +28,7 @@
 #   6 0 0  0  0  0  0  0
 #   f 0 0  0  0  0  0  0
 
+# @param str1 [String] str2 [String] given strings
 def longest_common_substring(str1, str2)
   len1 = str1.length
   len2 = str2.length

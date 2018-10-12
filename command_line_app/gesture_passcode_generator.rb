@@ -98,7 +98,7 @@ class GesturePasscode
   # [1, 2, 3]
   # [4, 5, 6]
   # [7, 8, 9]
-  # @param key_pass_array [Int] an array of sequences eg, [2, 5, 8, 9, 6, 3]
+  # @param key_pass_array [Array<Integer>] an array of sequences eg, [2, 5, 8, 9, 6, 3]
   private def print_3x3keyboard(key_pass_array)
     # group array into a hash: { 2 => [..], 1 => [..], 0 => [..] }
     # representing 3 colums on the 3x3 keyboard
