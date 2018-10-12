@@ -44,8 +44,4 @@ def longest_increasing_subsequence(sequence)
 end
 # TODO: also show the actual longest increasing subsequence
 
-arr = [10, 22, 9, 33, 21, 50, 41, 60]
-puts "Length of LIS is", longest_increasing_subsequence(arr)
 
-arr2 = [10, 22, 9, 33, 21, 50, 41, 60, 73, 8, 91]
-puts "Length of LIS is", longest_increasing_subsequence(arr2)

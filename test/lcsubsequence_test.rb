@@ -5,12 +5,10 @@ class LCStringTest < Test::Unit::TestCase
   STR1A = "ABCDGHLQR"
   STR1B = "AEDPHR"
   RESULT1 = "ADHR"
-  # puts "LCS is: " + longest_common_subsequence(x, y) # ADHR
 
   STR2A = "AGGTAB"
   STR2B = "GXTXAYB"
   RESULT2 = "GTAB"
-  # puts "LCS is: " + longest_common_subsequence(a, b) # GTAB
 
   def test_lcs1
     result = longest_common_subsequence STR1A, STR1B
