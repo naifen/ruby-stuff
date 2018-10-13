@@ -18,7 +18,7 @@
 # iteration#2 i < 0 => 1temp[i] = temp[j + 1]
 # NOTE: meaning element at i's lis length is at least 1 more than element at j's
 
-# @param sequence [Array<Integer>] a given sequence eg, [2, 8, 10 ... 5, 3]
+# @param sequence [Array<Integer>] a given sequence eg, [2, 8, 10 ... 5, 20]
 def longest_increasing_subsequence(sequence)
   len = sequence.length
 
@@ -33,12 +33,6 @@ def longest_increasing_subsequence(sequence)
       end
     end
   end
-
-  # maximum = 0
-
-  # for i in (0..(len - 1))
-    # maximum = [maximum , temp[i]].max
-  # end
 
   return temp.max
 end
