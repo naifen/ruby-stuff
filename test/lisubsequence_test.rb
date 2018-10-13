@@ -1,7 +1,7 @@
 require 'test/unit'
 require_relative "../dynamic_programming/longest_increasing_subsequence"
 
-class LCStringTest < Test::Unit::TestCase
+class LISubsequenceTest < Test::Unit::TestCase
   SEQUENCE1 = [10, 22, 9, 33, 21, 50, 41, 60]
   RESULT1 = 5
 

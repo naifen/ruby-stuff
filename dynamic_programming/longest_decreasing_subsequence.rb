@@ -23,7 +23,3 @@ def longest_decreasing_subsequence(sequence)
 end
 # TODO: also show the actual longest decreasing subsequence
 
-puts longest_decreasing_subsequence [1, 4, 3, 7, 2, 1, 8, 11, 13, 0] # 5
-puts longest_decreasing_subsequence [15, 27, 14, 38, 63, 55, 46, 65, 85] # 3
-puts longest_decreasing_subsequence [50, 3, 10, 7, 40, 80] # 3
-
