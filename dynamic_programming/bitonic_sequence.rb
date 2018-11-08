@@ -7,7 +7,7 @@
 def longest_bitonic_sequence(sequence)
   len = sequence.length
 
-  # first find the longes increasing subsequence
+  # first find the longes increasing subsequence for each index
   lis = [1] * len # or Array.new(len, 1)
 
   for i in (1..(len - 1))
@@ -18,7 +18,7 @@ def longest_bitonic_sequence(sequence)
     end
   end
 
-  # second find the longes decreasing subsequence
+  # second find the longes decreasing subsequence for each index
   lds = [1] * len # or Array.new(len, 1)
 
   (len - 2).downto(0) do |i|
@@ -32,19 +32,10 @@ def longest_bitonic_sequence(sequence)
   result = lis[0] + lds[0] - 1
 
   # calculate longest bitonic seq at each index i, and compare with result
-  # subtract 1 b/c the number itself is overlapped
+  # subtract 1 because the number itself is overlapped
   for i in (1..len - 1)
     result = [(lis[i] + lds[i] - 1), result].max
   end
 
   result
 end
-# TODO not working and add test
-
-seq = [0 , 8 , 4, 12, 2, 10 , 6 , 14 , 1 , 9 , 5 , 13, 3, 11 , 7 , 15] # 7
-max_value = longest_bitonic_sequence(seq)
-puts max_value
-
-seq2 = [1, 11, 2, 10, 4, 5, 2, 1] # 6
-max_value2 = longest_bitonic_sequence(seq2)
-puts max_value2
