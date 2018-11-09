@@ -8,7 +8,7 @@ def bubble_sort(array)
   # * compare every element in range 0 to 6, find largest element for index 6
   # * compare every element in range 0 to 5, find largest element for index 5
   # ...
-  # * till range 0..0
+  # * repeat till range 0..0
   for i in (1..(len - 1))
     for j in (0..(len - i - 1))
       if array[j] > array[j + 1]
