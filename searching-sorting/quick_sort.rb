@@ -32,6 +32,47 @@ def quick_sort(arr, low = 0, high = arr.length - 1)
   end
 end
 
-ary = [64, 34, 25, 12, 22, 11, 90]
-quick_sort ary
-puts ary
+# solution 2
+def quick_sort2(array, from = 0, to = nil)
+  to = array.count - 1 if to == nil
+
+  return if from >= to
+
+  pivot = array[from] # take left most as initial pivot
+
+  min = from
+  max = to
+
+  free = min
+
+  while min < max
+    if free == min
+      if array[max] <= pivot # swap left with right if smaller than pivot
+        array[free] = array[max]
+        min += 1
+        free = max
+      else
+        max -= 1
+      end
+    elsif free == max
+      if array[min] >= pivot
+        array[free] = array[min]
+        max -= 1
+        free = min
+      else
+        min += 1
+      end
+    else
+      raise "Inconsistent state"
+    end
+  end
+
+  array[free] = pivot
+
+  quick_sort array, from, free - 1
+  quick_sort array, free + 1, to
+end
+
+# ary = [64, 34, 25, 12, 22, 11, 90]
+# quick_sort2 ary
+# puts ary
