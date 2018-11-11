@@ -1,6 +1,9 @@
-### This repo contains algorithm, dynamic programming problems, katas, puzzles, tips, tricks, etc. All are mplemented in ruby.
+### This repo contains Ruby implementations of
+* some fundamental CS algorithms,
+* dynamic programming problems,
+* katas, puzzles, tips, tricks, etc.
 
-#### Motivation: Practice Ruby coding, improve ruby knowledge, programming and problem solving skills.
+#### Motivation: Practice Ruby coding, improve ruby knowledge, programming, and problem-solving skills.
 
 #### Command line apps can be run directly from command line, e.g.,
 ``./gesture_passcode_generator method arg1 arg2 ...``
