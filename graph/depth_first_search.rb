@@ -22,50 +22,40 @@ class Graph
   end
 end
 
-class BreadthFirstSearch
+class DepthFirstSearch
   def initialize(graph, source_vertex)
     @graph = graph
     @source_vertex = source_vertex
     @visited = []
     @edge_to = {}
 
-    bfs(source_vertex)
+    dfs(source_vertex)
   end
 
+  # finding any connected vertice is [O(1)] (constant time) after dfs
+  # finding a path to this vertex is time [O(n)] (linear time)
   # @param vertex[<Vertex>]
   # return an array of <Vertex> representing the path
-  def shortest_path_to(vertex)
+  def path_to(vertex)
     return unless has_path_to?(vertex)
     path = []
+    current_vertex = vertex
 
-    while(vertex != @source_vertex) do
-      path.unshift(vertex) # unshift adds the vertex to the beginning of the array
-      vertex = @edge_to[vertex]
+    while(current_vertex != @source_vertex) do
+      path.unshift(current_vertex)
+      current_vertex = @edge_to[current_vertex]
     end
 
     path.unshift(@source_vertex)
   end
 
   private
-
-  def bfs(vertex)
-    # mark visited vertex by storing them in visited array, ensure only visit once
-    # queue contains vertex to visite, always pop out the 1st element in the queue
-    queue = []
-    queue << vertex
+  def dfs(vertex)
     @visited << vertex
-
-    # Repeat until the queue is empty:
-    # - Remove the least recently added vertex n
-    # - add each of n's unvisited adjacents to the queue and mark them as visited
-    while queue.any?
-      current_vertex = queue.shift # remove first element
-      current_vertex.adjacents.each do |adjacent_vertex|
-        next if @visited.include?(adjacent_vertex)
-        queue << adjacent_vertex
-        @visited << adjacent_vertex
-        @edge_to[adjacent_vertex] = current_vertex
-      end
+    vertex.adjacents.each do |adjacent_vertex|
+      next if @visited.include?(adjacent_vertex)
+      dfs(adjacent_vertex)
+      @edge_to[adjacent_vertex] = vertex
     end
   end
 
@@ -82,11 +72,12 @@ end
 
 graph = Graph.new
 graph.add_edge(@vertex1, @vertex2)
+graph.add_edge(@vertex1, @vertex5)
 graph.add_edge(@vertex2, @vertex3)
 graph.add_edge(@vertex2, @vertex4)
 graph.add_edge(@vertex4, @vertex5)
-graph.add_edge(@vertex1, @vertex5)
 
-path = BreadthFirstSearch.new(graph, @vertex1).shortest_path_to(@vertex5)
+path = DepthFirstSearch.new(graph, @vertex1).path_to(@vertex5)
 
-puts "shortest path to V5 is V1 -> V5? #{path == [@vertex1, @vertex5]}"
+# puts "path to V5 is V1 -> V2 -> V4 -> V5? #{path[0] == nil}"
+puts "path to V5 is V1 -> V2 -> V4 -> V5? #{path == [@vertex1, @vertex2, @vertex4, @vertex5]}"
