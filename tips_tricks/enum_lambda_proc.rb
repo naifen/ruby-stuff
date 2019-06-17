@@ -4,12 +4,13 @@
 # it always call to_proc on its operand(symbol, lambda implement to_proc differently)
 
 # I. use it with lambda/proc makes no difference(a lambda/proc is a proc)
-lp = lambda { |x| x * x } # newer syntax: -> { |x| x * x }
+lp = lambda { |x| x * x } # newer syntax: -> { |x| x * x } or ->(x) { x * x}
 lp.to_proc == lp # => true
 # However lambda is more strict with arguments
 lp.call # => ArgumentError: wrong number of arguments (given 0, expected 1)
 lp.call 1, 2 # => ArgumentError: wrong number of arguments (given 2, expected 1)
-# proc works just fine, given proc = Proc.new { |x| x * x }
+# proc works just fine, given
+proc = Proc.new { |x| x * x }
 proc.call # => returns nil
 proc.call 1, 2 => # returns 1
 
@@ -17,8 +18,8 @@ proc.call 1, 2 => # returns 1
 # Lambdas are defined with -> {} and procs with Proc.new {}.
 # Procs return from the current method, while lambdas return from the lambda itself.
 # Procs don’t care about the correct number of arguments, while lambdas will raise an exception.
-# many was to call a lambda
-# lambda = -> { puts "Lambda called" }
+# many ways to call a lambda
+# given lambda = -> { puts "Lambda called" }
 # lambda.call
 # lambda.()
 # lambda[]

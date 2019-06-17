@@ -40,12 +40,12 @@ end
 def tail_factorial(n, prod = 1)
   return prod if n == 1
 
-  tail_factorial(n - 1, n * prod)
+  tail_factorial(n - 1, n * prod) # just return a function call
 end
 
 def memo_factorial(n, memo = {})
   return n if n <= 1
-  memo[n] ||= n * memo_factorial(n - 1, memo)
+  memo[n] ||= n * memo_factorial(n - 1, memo) # not a function call tho
 end
 
 
